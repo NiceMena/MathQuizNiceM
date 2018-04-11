@@ -40,17 +40,6 @@ local points = 0
 local pointsObject
 local randomOperator
 local gameOver
-local gameOverSound = audio.loadSound("Sounds/dead.mp3")
-local gameOverSoundChannel
-local correctSound
-local correctSound = audio.loadSound("Sounds/correctSound.mp3")
-local correctSoundChannel
-local wrongSound
-local wrongSound = audio.loadSound("Sounds/wrongSound.mp3")
-local wrongSoundChannel
-local winSound
-local winSound = audio.loadSound("Sounds/tada.wav")
-local winSoundChannel
 local winscreen
 
 
@@ -64,7 +53,6 @@ local function AskQuestion()
   randomNumber2 = math.random(0, 20)
   randomNumber3 = math.random(1, 10)
   randomNumber4 = math.random(1, 10)
-  randomOperator = math.random(1, 3)
   randomOperator = math.random(1, 4)
 
   if (randomOperator == 1) then
@@ -156,7 +144,6 @@ local function UpdateHearts()
     heart3.isVisible = false
     gameOver.isVisible = true
 
-    gameOverSoundChannel = audio.play(gameOverSound)
 
     StopTimer()
 
@@ -187,7 +174,6 @@ local function UpdateTime()
 
     lives = lives -1
 
-    wrongSoundChannel = audio.play(wrongSound)
 
     UpdateHearts()
 
@@ -235,7 +221,7 @@ local function NumericFieldListener( event )
     if (userAnswer == correctAnswer) then
       correctObject.isVisible = true
 
-      timer.performWithDelay(2000, HideCorrect)
+      timer.performWithDelay(3000, HideCorrect)
 
       event.target.text = ""
 
@@ -245,7 +231,6 @@ local function NumericFieldListener( event )
 
       secondsLeft = totalSeconds
 
-      correctSoundChannel = audio.play(correctSound)
 
     else
       lives = lives -1
@@ -254,13 +239,12 @@ local function NumericFieldListener( event )
       incorrectObject.text = "The correct answer is "..correctAnswer
       incorrectObject.isVisible = true
 
-      timer.performWithDelay(2000, HideIncorrect)
+      timer.performWithDelay(3000, HideIncorrect)
 
       event.target.text = ""
 
       secondsLeft = totalSeconds
 
-      wrongSoundChannel = audio.play(wrongSound)
 
     end
 
@@ -271,7 +255,6 @@ local function NumericFieldListener( event )
 
       StopTimer()
 
-      winSoundChannel = audio.play(winSound)
     end     
 
   end
@@ -297,8 +280,8 @@ heart3.y = display.contentHeight * 1/7
 
 --create the gameover screen
 gameOver = display.newImageRect("Images/gameOver.png", 1100, 1100)
-gameOver.x = 500
-gameOver.y = 400
+gameOver.x = 600
+gameOver.y = 500
 gameOver.isVisible = false
 
 --create the clock object
